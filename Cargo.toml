@@ -1,0 +1,9 @@
+[package]
+name = "rustel-studio-themes"
+version = "0.1.0"
+edition = "2024"
+license = "AGPL-3.0-or-later"
+repository = "https://github.com/undy-aeon/rustel-studio-themes"
+publish = false
+description = "Theme documents for the Rustel studio"
+rust-version = "1.98.1"
