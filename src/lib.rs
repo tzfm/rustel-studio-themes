@@ -1,17 +1,43 @@
-//! Theme documents for the Rustel studio.
+//! Theme documents and engines for the Rustel studio.
 //!
 //! Each name loads one JSON document. The studio parses the document.
+//! The engines draw the cell effects those documents name.
+
+mod braille;
+mod color;
+mod model;
+
+pub mod visuals;
+
+pub use model::{
+    CellEffect, CellVisual, CharacterEffect, CharacterVisual, TachyonMode, ThemePaint,
+};
 
 /// Catalogue themes, in picker order.
 pub fn catalogue() -> &'static [(&'static str, &'static str)] {
-    CATALOGUE
+    #[cfg(feature = "pack")]
+    {
+        CATALOGUE
+    }
+    #[cfg(not(feature = "pack"))]
+    {
+        &[]
+    }
 }
 
 /// Showroom themes, in picker order.
 pub fn showroom() -> &'static [(&'static str, &'static str)] {
-    SHOWROOM
+    #[cfg(feature = "pack")]
+    {
+        SHOWROOM
+    }
+    #[cfg(not(feature = "pack"))]
+    {
+        &[]
+    }
 }
 
+#[cfg(feature = "pack")]
 const CATALOGUE: &[(&str, &str)] = &[
     // rustel-dark with a slow drift breathing behind the code: the theme
     // that shows a theme can carry a sketch of its own.
@@ -97,6 +123,7 @@ const CATALOGUE: &[(&str, &str)] = &[
 ];
 
 // Fixed effect presets live in JSON too, with independently editable defaults.
+#[cfg(feature = "pack")]
 const SHOWROOM: &[(&str, &str)] = &[
     ("beams", include_str!("../themes/beams.json")),
     ("binarypath", include_str!("../themes/binarypath.json")),
@@ -142,6 +169,7 @@ const SHOWROOM: &[(&str, &str)] = &[
 ];
 
 #[cfg(test)]
+#[cfg(feature = "pack")]
 mod tests {
     use super::{catalogue, showroom};
 

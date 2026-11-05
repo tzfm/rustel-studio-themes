@@ -1,9 +1,33 @@
 [package]
 name = "rustel-studio-themes"
-version = "0.1.0"
+version = "0.2.0"
 edition = "2024"
 license = "AGPL-3.0-or-later"
-repository = "https://github.com/undy-aeon/rustel-studio-themes"
+repository = "https://github.com/tzfm/rustel-studio-themes"
 publish = false
-description = "Theme documents for the Rustel studio"
+description = "Theme documents and engines for the Rustel studio"
 rust-version = "1.98.1"
+
+[features]
+default = ["pack"]
+# The JSON documents other than rustel-dark, in picker order.
+pack = []
+# Camera frame methods. The studio forwards its own hydra feature here.
+hydra = []
+
+[dependencies]
+# Same features as the studio, so the two crates share one ratatui.
+ratatui = { version = "0.30", default-features = false, features = [
+  "crossterm_0_29",
+  "underline-color",
+] }
+# Native, cell-precise theme effects. The DSL is omitted: a theme selects
+# a bounded preset rather than executing code.
+tachyonfx = { version = "=0.25.1", default-features = false, features = [
+  "std",
+] }
+unicode-width = "0.2"
+serde = { version = "1", features = ["derive"] }
+
+[dev-dependencies]
+serde_json = "1"
